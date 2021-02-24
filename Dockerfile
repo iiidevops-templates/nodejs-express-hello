@@ -1,3 +1,4 @@
+# FROM node:alpine
 FROM dockerhub/library/node:alpine
 
 WORKDIR /usr/app
