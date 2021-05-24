@@ -3,10 +3,10 @@ stages:
   steps:
   - env:
       PLUGIN_BUILD_ARGS: --progress=tty --network=host
-      PLUGIN_DEBUG: true
-      PLUGIN_INSECURE: true
+      PLUGIN_DEBUG: 'true'
+      PLUGIN_INSECURE: 'true'
       PLUGIN_MIRROR: https://harbor-dev3.iiidevops.org
-      PLUGIN_MTU: 1000
+      PLUGIN_MTU: '1000'
     publishImageConfig:
       buildContext: .
       dockerfilePath: ./Dockerfile
@@ -85,6 +85,7 @@ stages:
         git.repoName: ${CICD_GIT_REPO_NAME}
         git.url: ${CICD_GIT_URL}
         harbor.host: harbor-dev3.iiidevops.org
+        pipeline.sequence: ${CICD_EXECUTION_SEQUENCE}
         web.imageTag: ${CICD_GIT_REPO_NAME}/${CICD_GIT_BRANCH}:latest
         web.port: 3000
       catalogTemplate: cattle-global-data:iii-dev-charts3-web
@@ -110,9 +111,8 @@ stages:
       targetKey: rancher_url
     runScriptConfig:
       image: iiiorg/deployment-waiter:0.0.2
-      shellScript: 'rancher login ${rancher_url} -t ${rancher_api_token} --skip-verify;
-
-        bash /app/run.sh;'
+      shellScript: rancher login ${rancher_url} -t ${rancher_api_token} --skip-verify;
+        bash /app/run.sh
   when:
     branch:
       include:
